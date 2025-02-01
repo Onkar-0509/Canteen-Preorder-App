@@ -25,6 +25,6 @@ const foodSchema = new mongoose.Schema({
 
 },{timestamps:true})
 
-const foodModel = mongoose.models.food || mongoose.model("food",foodSchema);
+const Food = mongoose.model("Food",foodSchema);
 
-export default foodModel;
+export default Food;
