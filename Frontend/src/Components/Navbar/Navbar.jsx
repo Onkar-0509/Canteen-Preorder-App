@@ -3,11 +3,19 @@ import './Navbar.css'
 import { assets } from '../../assets/frontend_assets/assets';
 import { Link } from 'react-router-dom';
 import { StoreContext } from '../../Context/StoreContext';
+import { useNavigate } from 'react-router-dom';
 
  
 const Navbar = ({setShowLogin}) => {
   const [menu,setMenu] = useState("");
-  const {getTotalCartAmount} = useContext(StoreContext);
+  const {getTotalCartAmount,token,setToken} = useContext(StoreContext);
+
+   const navigate = useNavigate();
+  const logout=()=>{
+        localStorage.removeItem("token")
+        setToken("");
+        navigate("/")
+  }
   return (
     <div className='navbar flex px-5 py-3 justify-between items-center'>
       <Link to='/'><img className=' h-30 w-[160px]' src={assets.logo} alt="" /> </Link>
@@ -25,7 +33,43 @@ const Navbar = ({setShowLogin}) => {
            <Link to='/cart'><img className='w-6 cursor-pointer' src={assets.basket_icon} alt="" /> </Link>  
                <div className={getTotalCartAmount()===0 ? "":"dot absolute min-w-2 min-h-2 rounded-[10px] bg-red-600 top-[-6px] right-[-4px] "}></div>
         </div>
-           <button onClick={() => setShowLogin(true)} className='text-[16px] text-[#49557e] bg-transparent border border-[#48484f] rounded-[50px] px-[20px] py-[5px] cursor-pointer hover:bg-[#fff4f2] transition-[3s]'>sign in</button>
+        {
+  !token ? (
+    <button
+      onClick={() => setShowLogin(true)}
+      className="text-[16px] text-[#49557e] bg-transparent border border-[#48484f] rounded-full px-5 py-1 cursor-pointer hover:bg-[#fff4f2] transition-all duration-300"
+    >
+      Sign In
+    </button>
+  ) : (
+    <div className="relative group">
+      {/* Profile Icon */}
+      <img src={assets.profile_icon} alt="Profile" className="cursor-pointer" />
+
+      {/* Centered Dropdown */}
+      <ul className="hidden absolute left-1/2 -translate-x-1/2 group-hover:flex flex-col gap-2.5 bg-[#fff2ef] p-2 rounded-lg border border-[tomato] shadow-lg outline outline-2 outline-white list-none min-w-[130px] z-10">
+        <li
+          onClick={() => navigate('/order')}
+          className="flex items-center gap-2 cursor-pointer hover:text-[#FF4C24] px-1 rounded-md transition-all duration-200"
+        >
+          <img className="w-5" src={assets.bag_icon} alt="Orders" />
+          <p>Orders</p>
+        </li>
+        <hr className="border-t border-gray-300" />
+        <li
+          onClick={logout}
+          className="flex items-center gap-2 cursor-pointer hover:text-[#FF4C24] px-1 rounded-md transition-all duration-200"
+        >
+          <img className="w-5" src={assets.logout_icon} alt="Logout" />
+          <p>Logout</p>
+        </li>
+      </ul>
+    </div>
+  )
+}
+
+
+           
       </div>
       
     </div>

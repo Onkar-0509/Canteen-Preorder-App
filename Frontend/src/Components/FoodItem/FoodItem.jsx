@@ -10,7 +10,7 @@ const FoodItem = ({id,name,price,description,image}) => {
   return (
     <div className='food-item w-[100%] mx-auto rounded-2xl shadow-md shadow-black/15 relative'>
       <div className="food-item-img-container relative">
-        <img className='w-[100%] rounded-tl-[15px] rounded-tr-[15px] rounded-br-[0px] rounded-bl-[0px] ' src={image} alt="" />
+        <img className='w-[100%] rounded-tl-[15px] rounded-tr-[15px] rounded-br-[0px] rounded-bl-[0px] ' src={"http://localhost:3000/images/"+image} alt="" />
 
         {
           !cartItem[id] ? <img className='w-[35px] absolute right-2 bottom-3 cursor-pointer' onClick={()=>addToCart(id)} src={assets.add_icon_white} alt="" />:

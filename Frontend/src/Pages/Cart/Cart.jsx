@@ -23,15 +23,17 @@ const Cart = () => {
         <hr />
       
      
-
+        
 
       {food_list.map((item, index) => {
 
         if(cartItem[item._id]>0){
+          const image = "http://localhost:3000/images/"+item.image;
           return (
+            
             <div key={index}>
             <div  className='cart-items-title py-2 cart-items-item grid grid-cols-[1fr_1.5fr_1fr_1fr_1fr_0.5fr] items-center justify-center text-[max(1vw,12px)] mx-[10px] text-black '>
-              <img className='w-[80px] pr-2' src={item.image} alt="" />
+              <img className='w-[80px] pr-2' src={image} alt="" />
               <p>{item.name}</p>
               <p>${item.price}</p>
               <p>{cartItem[item._id]}</p>
