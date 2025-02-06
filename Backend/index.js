@@ -3,7 +3,8 @@ import cors from "cors";
 import connectDB from "./src/db/db.js";
 import foodRouter from "./src/routes/foodroute.js";
 import { userRouter } from "./src/routes/userRoute.js";
-import 'dotenv/config'
+import 'dotenv/config';
+import cartRouter from "./src/routes/cartRoute.js"
 
 const app = express();
 const port = 3000;
@@ -18,6 +19,7 @@ connectDB();
 app.use("/api/food",foodRouter);
 app.use("/images",express.static('uploads'))
 app.use("/api/user",userRouter)
+app.use("/api/cart",cartRouter);
 
 
 
