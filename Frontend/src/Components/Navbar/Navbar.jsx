@@ -18,7 +18,8 @@ const Navbar = ({setShowLogin}) => {
   }
   return (
     <div className='navbar flex px-5 py-3 justify-between items-center'>
-      <Link to='/'><img className=' h-30 w-[160px]' src={assets.logo} alt="" /> </Link>
+      {/* <Link to='/'><img className=' h-30 w-[160px]' src={assets.logo} alt="" /> </Link> */}
+      <p className='text-red-500 text-4xl font-semibold'>SpeedyServe</p>
       
       
       <ul className='navbar-menu cursor-pointer flex gap-5 list-none text-[#49557e] text-[16px]'>

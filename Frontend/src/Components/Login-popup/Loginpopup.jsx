@@ -37,12 +37,12 @@ const Loginpopup = ({setShowLogin}) => {
               setToken(response.data.token);
               localStorage.setItem("token",response.data.token)
               setShowLogin(false)
-              if(currState==="Login"){
-                toast.success("Login successfully!!!")
-              }
-              else{
-                toast.success("Sign-up successfully!!")
-              }
+              // if(currState==="Login"){
+              //   toast.success("Login successfully!!!")
+              // }
+              // else{
+              //   toast.success("Sign-up successfully!!")
+              // }
              
           }
           else{
