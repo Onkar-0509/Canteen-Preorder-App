@@ -55,18 +55,18 @@ const placeOrder = async (req, res) => {
     }
 }
 
-const verifyOrder = async (req, res) => {
-    const { orderId, success } = req.body;
+    const verifyOrder = async (req, res) => {
+       const { orderId, success } = req.body;
 
     try {
-        if (success === "true") {
+        if(success === "true") {
             await Order.findByIdAndUpdate(orderId, { payment: true });
             return res.status(200).json({ success: true, message: "Paid" });
-        } else {
+        }else{
             await Order.findByIdAndDelete(orderId);
             return res.status(400).json({ success: false, message: "Not Paid" });
         }
-    } catch (error) {
+    }catch (error) {
         console.error("Error verifying order:", error);
         return res.status(500).json({ success: false, message: "Internal Server Error" });
     }
@@ -85,4 +85,30 @@ const verifyOrder = async (req, res) => {
  }
 
 
-export {placeOrder, verifyOrder,userOrders}
+// Listing orders for admin panel
+
+const listOrders=async(req,res)=>{
+    try{
+        const orders = await Order.find({});
+        res.json({success:true,data:orders});
+
+    }catch(error){
+        console.log(error);
+        res.json({success:false,message:"Error"});
+    }
+}
+
+// api for updating order status
+
+const updateStatus = async(req,res)=>{
+     
+     try {
+        await Order.findByIdAndUpdate(req.body.orderId,{status:req.body.status});
+        res.json({success:true,message:"Status Updated"});
+     } catch (error) {
+        console.log(error);
+        res.json({success:false,message:"Error"});
+     }
+}
+
+export {placeOrder,verifyOrder,userOrders,listOrders,updateStatus}

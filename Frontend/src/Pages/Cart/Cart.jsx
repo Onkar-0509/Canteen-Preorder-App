@@ -35,9 +35,9 @@ const Cart = () => {
             <div  className='cart-items-title py-2 cart-items-item grid grid-cols-[1fr_1.5fr_1fr_1fr_1fr_0.5fr] items-center justify-center text-[max(1vw,12px)] mx-[10px] text-black '>
               <img className='w-[80px] pr-2' src={image} alt="" />
               <p>{item.name}</p>
-              <p>${item.price}</p>
+              <p>₹{item.price}</p>
               <p>{cartItem[item._id]}</p>
-              <p>${item.price*cartItem[item._id]}</p>
+              <p>₹{item.price*cartItem[item._id]}</p>
               <p onClick={()=>removeFromCart(item._id)} className='cursor-pointer pl-8'>X</p>
             </div>
             <hr className='h-[1px] ' />
@@ -58,20 +58,20 @@ const Cart = () => {
 
           <div className="cart-total-details flex justify-between text-[#555] py-2">
             <p>Subtotal</p>
-            <p>${getTotalCartAmount()}</p>
+            <p>₹{getTotalCartAmount()}</p>
           </div>
 
           <hr/>
 
           <div className="cart-total-details flex justify-between text-[#555] py-2">
             <p>Delivery Fee</p>
-            <p>${getTotalCartAmount()===0?0:2}</p>
+            <p>₹{getTotalCartAmount()===0?0:2}</p>
           </div>
           <hr />
 
           <div className="cart-total-details flex justify-between text-[#555] py-2">
           <b>Total</b>
-          <b>${ getTotalCartAmount()===0?0:getTotalCartAmount()+2}</b>
+          <b>₹{ getTotalCartAmount()===0?0:getTotalCartAmount()+2}</b>
           </div>
 
          

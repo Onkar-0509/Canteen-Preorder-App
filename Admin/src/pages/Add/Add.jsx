@@ -94,7 +94,7 @@ const Add = () => {
           </div>
           <div className="add-price mb-2 flex flex-col gap-2">
             <p>Product Price</p>
-            <input onChange={onChangeHandler} value={data.price} className='border p-[2px] rounded-sm max-w-[120px]' name="price" type="Number" placeholder='$30' />
+            <input onChange={onChangeHandler} value={data.price} className='border p-[2px] rounded-sm max-w-[120px]' name="price" type="Number" placeholder='₹30' />
           </div>
         </div>
 

@@ -7,7 +7,7 @@ const ExploreMenu = ({category,setCategory}) => {
   return (
     <div id='explore-menu' className='explore-menu flex flex-col gap-5 pb-2 '>
             <h1 className='text-2xl font-medium '>Explore our menu</h1>
-            <p className='explore-menu-text max-w-[60%] '>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Neque eligendi at corrupti! Lorem ipsum dolor sit amet, consectetur adipisicing elit. Odio officiis neque fuga.</p>
+            <p className='explore-menu-text max-w-[60%] '>Dive into a world of flavors! From classic favorites to exciting new dishes, our menu has something for every craving.</p>
             <div className="explore-menu-list flex justify-between items-center text-center gap-10 mx-5">
   {menu_list.map((item, index) => (
 
