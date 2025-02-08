@@ -6,9 +6,8 @@ const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
 
 // placing user order for frontend
 const placeOrder = async (req, res) => {
-
-    const frontend_URL="http://localhost:5173"
-    
+       
+     const frontend_URL="http://localhost:5173"
     try {
         const newOrder = new Order({
             userId: req.body.userId,
@@ -19,19 +18,16 @@ const placeOrder = async (req, res) => {
         await newOrder.save();
         await User.findByIdAndUpdate(req.body.userId, { cartData: {} });
 
-        console.log("Received order items:", req.body.items);
-
-        const line_items = req.body.items
-        .filter(item => item.quantity && item.quantity > 0) // Ensure valid quantity
-        .map((item) => ({
+        const line_items = req.body.items.map((item) => ({
             price_data: {
                 currency: "inr",
-                product_data: { name: item.name },
-                unit_amount: Math.round(item.price * 100*87) // Convert price to paise
+                product_data: {
+                    name: item.name
+                },
+                unit_amount: item.price * 100 
             },
-            quantity: Math.floor(item.quantity) // Ensure integer quantity
-        }));
-    
+            quantity: item.quantity
+        }))
 
         line_items.push({
             price_data: {
@@ -39,7 +35,7 @@ const placeOrder = async (req, res) => {
                 product_data: {
                     name: "Delivery Charge"
                 },
-                unit_amount: 2 * 100*87
+                unit_amount: 2* 100
             },
             quantity: 1
         })
@@ -58,4 +54,35 @@ const placeOrder = async (req, res) => {
         res.json({ success: false, message: "Error" })
     }
 }
-export {placeOrder }
+
+const verifyOrder = async (req, res) => {
+    const { orderId, success } = req.body;
+
+    try {
+        if (success === "true") {
+            await Order.findByIdAndUpdate(orderId, { payment: true });
+            return res.status(200).json({ success: true, message: "Paid" });
+        } else {
+            await Order.findByIdAndDelete(orderId);
+            return res.status(400).json({ success: false, message: "Not Paid" });
+        }
+    } catch (error) {
+        console.error("Error verifying order:", error);
+        return res.status(500).json({ success: false, message: "Internal Server Error" });
+    }
+};
+
+//user orders for frontend
+ const userOrders=async(req,res)=>{    
+        try{
+            const orders = await Order.find({userId:req.body.userId});
+            res.json({success:true,data:orders})
+                                
+        }catch(error){
+            console.log(error);
+            res.json({success:false,meassage:"Error"});
+        }
+ }
+
+
+export {placeOrder, verifyOrder,userOrders}

@@ -50,7 +50,7 @@ const Navbar = ({setShowLogin}) => {
       {/* Centered Dropdown */}
       <ul className="hidden absolute left-1/2 -translate-x-1/2 group-hover:flex flex-col gap-2.5 bg-[#fff2ef] p-2 rounded-lg border border-[tomato] shadow-lg outline outline-2 outline-white list-none min-w-[130px] z-10">
         <li
-          onClick={() => navigate('/order')}
+          onClick={() => navigate('/myorders')}
           className="flex items-center gap-2 cursor-pointer hover:text-[#FF4C24] px-1 rounded-md transition-all duration-200"
         >
           <img className="w-5" src={assets.bag_icon} alt="Orders" />
