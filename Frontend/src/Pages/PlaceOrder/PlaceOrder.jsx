@@ -31,8 +31,8 @@ const PlaceOrder = () => {
   
       food_list.forEach((item) => {
           if (cartItem[item._id] > 0) {
-              let itemInfo = { ...item }; // Copy object to avoid mutation
-              itemInfo["quantity"] = cartItem[item._id]; // ✅ Correctly assign quantity
+              let itemInfo = { ...item }; 
+              itemInfo["quantity"] = cartItem[item._id]; 
               orderItems.push(itemInfo);
           }
       });

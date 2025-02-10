@@ -34,7 +34,7 @@ const MyOrders = () => {
               ))}
             </p>
             <p>₹{order.amount}.00</p>
-            <p>Items: {order.items.length}</p>
+            <p>Items:{order.items.length}</p>
             <p>
               <span className="text-red-500">&#x25cf;</span> <b className="font-medium">{order.status}</b>
             </p>
