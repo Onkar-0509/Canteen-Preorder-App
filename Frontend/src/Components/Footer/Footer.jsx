@@ -7,7 +7,7 @@ const Footer = () => {
         <div className="footer-content  grid gap-[80px] grid-cols-[2fr_1fr] w-[90%] mx-auto"> 
             <div className="footer-content-left flex flex-col items-start gap-[20px]">
                 {/* <img  src={assets.logo} alt="" /> */}
-                <p className='text-[#ff2e4aeb] italic text-[34px] font-[550]'>EasyServe</p>
+                <p className='text-[#ff2e4aeb] italic text-[34px] font-[550]'>SpeedyServe</p>
                 <p>📦 Fast Delivery | 🍽️ Fresh Ingredients | 💳 Secure Payments</p>
                 <div className="footer-social-icons flex gap-3">
                     <img className='w-[40px] mr-[15px] cursor-pointer' src={assets.twitter_icon} alt="" />
@@ -31,13 +31,13 @@ const Footer = () => {
                     <h2 className='text-white text-2xl'>GET IN TOUCH</h2>
                     <ul>
                         <li className=' list-none mb-[10px] cursor-pointer '>+91-9322714123</li>
-                        <li className=' list-none mb-[10px] cursor-pointer '>easyserve@gmail.com</li>
+                        <li className=' list-none mb-[10px] cursor-pointer '>speedyserve@gmail.com</li>
                     </ul>
                     </div>
                 
               </div>
       <hr className='w-[95%] h-[2px] mx-5 bg-gray-700 mt-5' />
-      <p className='footer-copyright'>Copyright 2025 @ EasyServe - All right reserved</p>
+      <p className='footer-copyright'>Copyright 2025 @ SpeedyServe - All right reserved</p>
     </div>
   )
 }
