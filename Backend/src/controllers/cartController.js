@@ -1,5 +1,6 @@
 import express from 'express';
 import { User } from '../models/userModel.js';
+import mongoose from 'mongoose';
 
 // add item in user cart
 const addToCart = async(req,res)=>{
@@ -42,16 +43,27 @@ const removeToCart =async(req,res)=>{
 }
 
 //fetch user card data
-const getCart = async(req,res)=>{
-        let userData = await User.findById({_id:req.body.userId});
-        let cartData = await userData.cartData // extract the cart data from user model
-        try{
-            res.json({success:true,data:cartData});
+const getCart = async (req, res) => {
+    try {
+        if (!req.body.userId) {
+            return res.status(400).json({ success: false, message: "User ID is required" });
         }
-        catch(error){
-            console.log(error);
-            res.json({success:true,message:"Error"});
+
+        let userData = await User.findById(req.body.userId); // No need for `{_id: req.body.userId}`
+        
+        if (!userData) {
+            return res.status(404).json({ success: false, message: "User not found" });
         }
-}
+
+        let cartData = userData.cartData; // Directly access, no need for `await`
+        
+        return res.json({ success: true, data: cartData });
+    } catch (error) {
+        console.error("Error fetching cart:", error);
+        return res.status(500).json({ success: false, message: "Internal Server Error" });
+    }
+};
+
+
 
 export {addToCart,removeToCart,getCart}

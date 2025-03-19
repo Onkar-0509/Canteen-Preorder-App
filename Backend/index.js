@@ -8,7 +8,7 @@ import cartRouter from "./src/routes/cartRoute.js";
 import orderRouter from "./src/routes/orderRoute.js";
 
 const app = express();
-const port = 3000;
+const port = 4000;
 
 app.use(cors());         // access the backend from frontend
 app.use(express.json());  // parse the json request
