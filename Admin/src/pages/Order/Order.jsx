@@ -7,7 +7,7 @@ const Order = () => {
   const [orders, setOrders] = useState([]);
 
   const fetchAllOrders = async () => {
-    const response = await axios.get("http://localhost:3000/api/order/list");
+    const response = await axios.get("http://localhost:4000/api/order/list");
     if (response.data.success) {
       setOrders(response.data.data.reverse());
     } else {
@@ -17,7 +17,7 @@ const Order = () => {
 
  const statusHandler = async(event,orderId) =>{
      
-      const response = await axios.post("http://localhost:3000/api/order/status",
+      const response = await axios.post("http://localhost:4000/api/order/status",
       {orderId,
       status:event.target.value})
 

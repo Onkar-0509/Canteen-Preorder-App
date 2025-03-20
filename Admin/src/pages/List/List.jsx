@@ -11,7 +11,7 @@ const List = () => {
 
   const fetchList = async()=>{
     try{
-      const response = await axios.get("http://localhost:3000/api/food/list");
+      const response = await axios.get("http://localhost:4000/api/food/list");
       console.log(response.data);
       if(response.data.success){
          setList(response.data.data)
@@ -23,7 +23,7 @@ const List = () => {
   };
 
   const removeFood= async(foodId)=>{
-      const response = await axios.post("http://localhost:3000/api/food/delete", {id:foodId});
+      const response = await axios.post("http://localhost:4000/api/food/delete", {id:foodId});
       // console.log(foodId)
       
       if(response.data.success){
@@ -57,7 +57,7 @@ const List = () => {
                 return (
                   <div key={index} className='list-table-format grid grid-cols-[1fr_1fr_1fr_1fr_0.5fr] max-md:grid-cols-[1fr_3fr_1fr]
                             items-center gap-3 p-[15px] border text-[14px]'>
-                      <img className='w-[60px]' src={"http://localhost:3000/images/"+item.image} alt="" />
+                      <img className='w-[60px]' src={"http://localhost:4000/images/"+item.image} alt="" />
                       <p>{item.name}</p>
                       <p>{item.category}</p>
                       <p>₹{item.price}</p>
