@@ -8,13 +8,14 @@ import Order from './pages/Order/Order'
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import Footer from './components/Footer/Footer'
+import Login from './components/Login/Login'
 
 const App = () => {
   
   return (
     <div className=''>
       <ToastContainer />
-     <Navbar/>
+     {/* <Navbar/>
      <hr className='h-1 ' />
      <div className='app-component flex'>
        <Sidebar/>
@@ -27,7 +28,9 @@ const App = () => {
         </Routes>
 
      </div>
-      <Footer/>
+      <Footer/> */}
+
+      <Login/>
     </div>
   )
 }

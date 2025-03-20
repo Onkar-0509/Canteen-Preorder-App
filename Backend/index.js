@@ -6,6 +6,7 @@ import { userRouter } from "./src/routes/userRoute.js";
 import 'dotenv/config';
 import cartRouter from "./src/routes/cartRoute.js";
 import orderRouter from "./src/routes/orderRoute.js";
+import canteenRouter from "./src/routes/canteenRoute.js";
 
 const app = express();
 const port = 4000;
@@ -22,6 +23,7 @@ app.use("/images",express.static('uploads'))
 app.use("/api/user",userRouter)
 app.use("/api/cart",cartRouter);
 app.use("/api/order",orderRouter);
+app.use("/api/canteen",canteenRouter)
 
 
 
