@@ -7,41 +7,55 @@ const Order = () => {
   const [orders, setOrders] = useState([]);
 
   const fetchAllOrders = async () => {
-    const response = await axios.get("http://localhost:4000/api/order/list");
-    if (response.data.success) {
-      setOrders(response.data.data.reverse());
-    } else {
-      toast.error('Error');
+    try {
+      const response = await axios.get("http://localhost:4000/api/order/list");
+      if (response.data.success) {
+        setOrders(response.data.data.reverse());
+      } else {
+        toast.error('Error fetching orders');
+      }
+    } catch (err) {
+      toast.error('Error fetching orders');
     }
   };
 
- const statusHandler = async(event,orderId) =>{
-     
-      const response = await axios.post("http://localhost:4000/api/order/status",
-      {orderId,
-      status:event.target.value})
+  const statusHandler = async (event, orderId) => {
+    try {
+      const response = await axios.post("http://localhost:4000/api/order/status", {
+        orderId,
+        status: event.target.value
+      });
 
-      if(response.data.success){
-         await fetchAllOrders();
+      if (response.data.success) {
+        await fetchAllOrders();
+      } else {
+        toast.error('Error updating status');
       }
- }
+    } catch (err) {
+      toast.error('Error updating status');
+    }
+  };
 
   useEffect(() => {
     fetchAllOrders();
   }, []);
 
   return (
-    <div className="p-6 w-[80%] text-[#49557e]">
-      <h3 className="text-2xl font-bold mb-6">Order Page</h3>
+    <div className="p-4 md:p-6 w-[95%] md:w-[80%] mx-auto text-[#49557e]">
+      <h3 className="text-2xl font-bold mb-6 text-center md:text-left">Order Page</h3>
+
       <div className="space-y-6">
         {orders.map((order, index) => (
           <div
             key={index}
-            className="grid grid-cols-1 md:grid-cols-5 gap-6 items-start border border-red-500 p-5 rounded-lg text-[#49557e]"
+            className="flex flex-col md:grid md:grid-cols-[0.5fr_2fr_1fr_1fr_1fr] gap-4 items-center border border-gray-300 p-4 rounded-lg bg-gray-50 shadow-sm"
           >
-            <img src={assets.parcel_icon} alt="" className="w-15" />
-            <div>
-              <p className="font-semibold text-[#49557e]">
+            {/* Order Image */}
+            <img src={assets.parcel_icon} alt="Parcel Icon" className="w-16 h-16 object-contain" />
+
+            {/* Order Details */}
+            <div className="text-center md:text-left">
+              <p className="font-semibold text-gray-800">
                 {order.items.map((item, idx) => (
                   <span key={idx}>
                     {item.name} x {item.quantity}
@@ -49,26 +63,25 @@ const Order = () => {
                   </span>
                 ))}
               </p>
-              <p className="font-semibold mt-6 mb-1">
-                {order.address.firstName} {order.address.lastName}
-              </p>
-              <div className="space-y-1">
-                <p>{order.address.street},</p>
-                <p>
-                  {order.address.city}, {order.address.state}, {order.address.country}, {order.address.zipcode}
-                </p>
+              <p className="font-semibold mt-3">{order.address.firstName} {order.address.lastName}</p>
+              <div className="text-sm text-gray-600">
+                <p>{order.address.street}, {order.address.city}</p>
+                <p>{order.address.state}, {order.address.country}, {order.address.zipcode}</p>
               </div>
-              <p className="mt-2">{order.address.phone}</p>
+              <p className="mt-2 text-gray-700">{order.address.phone}</p>
             </div>
-            <p>Items: {order.items.length}</p>
-            <p>
-            ₹
-              {order.amount}
-            </p>
+
+            {/* Item Count */}
+            <p className="text-center md:text-left font-medium">Items: {order.items.length}</p>
+
+            {/* Order Amount */}
+            <p className="text-green-600 font-semibold text-lg">₹{order.amount}</p>
+
+            {/* Order Status Dropdown */}
             <select
               onChange={(e) => statusHandler(e, order._id)}
               value={order.status}
-              className="bg-red-100 border border-red-500 rounded-md p-2 outline-none"
+              className="bg-white border border-gray-400 rounded-md p-2 outline-none text-sm md:text-base w-full md:w-auto cursor-pointer"
             >
               <option value="Food Processing">Food Processing</option>
               <option value="Out for delivery">Out for delivery</option>

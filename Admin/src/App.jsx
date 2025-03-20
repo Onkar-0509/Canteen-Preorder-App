@@ -7,6 +7,7 @@ import List from './pages/List/List'
 import Order from './pages/Order/Order'
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import Footer from './components/Footer/Footer'
 
 const App = () => {
   
@@ -26,6 +27,7 @@ const App = () => {
         </Routes>
 
      </div>
+      <Footer/>
     </div>
   )
 }

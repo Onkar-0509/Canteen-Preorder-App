@@ -20,7 +20,7 @@ const Sidebar = () => {
         </div></NavLink>
 
         <NavLink to='/order'>
-        <div onClick={()=>setActive("order")} className={active==="order"?"sidebar-option bg-orange-100 flex items-center gap-4 border-r-0 border-[1px] border-[#a9a9a9] px-[10px] py-[8px] rounded-l-md cursor-pointer" :"sidebar-option flex items-center gap-4 border-r-0 border-[1px] border-[#a9a9a9] px-[10px] py-[8px] rounded-l-md cursor-pointer"}>
+        <div onClick={()=>setActive("order")} className={active==="order"?"sidebar-option bg-orange-100 flex items-center gap-4 border-r-0 border-[1px] border-[#a9a9a9] px-[10px] pt-[8px] rounded-l-md cursor-pointer" :"sidebar-option flex items-center gap-4 border-r-0 border-[1px] border-[#a9a9a9] px-[10px] pt-[8px] rounded-l-md cursor-pointer"}>
         <img src={assets.order_icon} alt="" />
         <p className='max-md:hidden'>Orders</p>
         </div>
