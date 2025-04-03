@@ -29,7 +29,7 @@ const Cart = () => {
 
         {food_list.map((item, index) => {
           if (cartItem[item._id] > 0) {
-            const image = URL+"/images/" + item.image;
+            const image = item.image;
             return (
               <div key={index}>
                 <div className='cart-items-title py-2 cart-items-item grid grid-cols-[1.5fr_1.5fr_1fr_1fr] sm:grid-cols-[1fr_1.5fr_1fr_1fr_1fr_0.5fr] items-center justify-center text-[max(1vw,12px)] mx-[10px] text-black'>

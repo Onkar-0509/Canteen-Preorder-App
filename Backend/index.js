@@ -9,7 +9,9 @@ import orderRouter from "./src/routes/orderRoute.js";
 import canteenRouter from "./src/routes/canteenRoute.js";
 
 const app = express();
-const port = 4000;
+const port =  process.env.PORT || 4000;
+console.log();
+
 
 app.use(cors());         // access the backend from frontend
 app.use(express.json());  // parse the json request

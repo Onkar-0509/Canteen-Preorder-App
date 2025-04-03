@@ -1,58 +1,78 @@
 import Food from "../models/foodModel.js";
-import fs from "fs";
+import fs from "fs/promises"; // Use async file operations
+import uploadOnCloudinary from "../middlewares/cloudinary.js";
 
-const addFood = async(req,res)=>{
+const addFood = async (req, res) => {
+    try {
+        const canteenId = req.user?.canteenId;
 
-    const canteenId = req.user?.canteenId;  
-    
-    let image_filename = `${req.file.filename}`;
-
-    const food = new Food({
-        canteenId : canteenId,
-        name : req.body.name,
-        description : req.body.description,
-        price : req.body.price,
-        category : req.body.category, 
-        image : image_filename
-    })
-   
-    try{
-        await food.save();
-        res.json({success:true,message : "food Added"});
-
-    }catch(error){
-        console.log(error)
-        res.json({success:false,message:"Error"})
-    }
-}
-   
-   const listFood = async(req,res)=>{
-        try{
-            const foods = await Food.find({})
-            res.json({success:true,data:foods})
-        }catch(error){
-            console.log(error);
-            res.json({success:false , message:"Error"}); 
+        if (!req.file) {
+            return res.status(400).json({ success: false, message: "Image file is required" });
         }
-   }
-    
-// Remove food item
-const removeFood = async(req,res)=>{
-    try{
-        const food = await Food.findById(req.body.id)
-        // console.log(food)
-        fs.unlink(`uploads/${food.image}`,()=>{})
 
+        // Upload image to Cloudinary
+        console.log(req.file.path);
+        
+        const imageUpload = await uploadOnCloudinary(req.file.path);
+        if (!imageUpload || !imageUpload.secure_url) {
+            return res.status(500).json({ success: false, message: "Failed to upload image" });
+        }
+        const imageUrl = imageUpload.secure_url;
+
+        // Create new food entry
+        const food = new Food({
+            canteenId: canteenId,
+            name: req.body.name,
+            description: req.body.description,
+            price: req.body.price,
+            category: req.body.category,
+            image: imageUrl, // Store Cloudinary URL instead of filename
+            cloudinary_id: imageUpload.public_id, // Store Cloudinary image ID
+        });
+
+        await food.save();
+        res.json({ success: true, message: "Food Added Successfully!", imageUrl });
+
+    } catch (error) {
+        console.error("❌ Error in addFood API:", error);
+        res.status(500).json({ success: false, message: "Error adding food item" });
+    }
+};
+
+
+// Remove food item and delete image from Cloudinary
+const removeFood = async (req, res) => {
+    try {
+        const food = await Food.findById(req.body.id);
+        if (!food) {
+            return res.status(404).json({ success: false, message: "Food item not found" });
+        }
+
+        // Delete image from Cloudinary
+        if (food.cloudinary_id) {
+            await cloudinary.uploader.destroy(food.cloudinary_id);
+        }
+
+        // Remove food item from database
         await Food.findByIdAndDelete(req.body.id);
-        res.json({success:true,message:"Food Removed"})
+        res.json({ success: true, message: "Food Removed" });
 
+    } catch (error) {
+        console.error(error);
+        res.json({ success: false, message: "Error removing food item" });
+    }
+};
+
+
+const listFood = async(req,res)=>{
+    try{
+        const foods = await Food.find({})
+        res.json({success:true,data:foods})
     }catch(error){
-        // console.log(error);
-        res.json({success:false,message:"Error"})
+        console.log(error);
+        res.json({success:false , message:"Error"}); 
     }
 }
-
-
 
 const canteenFood = async(req,res)=>{
     const canteenId = req.user?.canteenId;  // Extract canteenId from the decoded JWT

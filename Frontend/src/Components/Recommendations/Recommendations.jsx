@@ -16,7 +16,7 @@ const MealCard = ({ meal, URL, isActive = false, canteenName }) => {
         <img
           onClick={() => navigate(`food-list/${meal.canteenId}`)}
           className="w-full h-full object-cover cursor-pointer"
-          src={`${URL}/images/${meal.image}`}
+          src={meal.image}
           alt={meal.name}
           onError={(e) => {
             e.target.src = 'https://via.placeholder.com/400x300?text=Food+Image';

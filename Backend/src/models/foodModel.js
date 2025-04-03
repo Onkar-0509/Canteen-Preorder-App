@@ -25,6 +25,10 @@ const foodSchema = new mongoose.Schema({
     canteenId:{
         type:String,
         required:true
+    },
+    cloudinary_id:{
+        type:String,
+        required:true
     }
 
 },{timestamps:true,minimize:false})

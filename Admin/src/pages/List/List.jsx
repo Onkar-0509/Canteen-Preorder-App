@@ -66,7 +66,7 @@ const List = () => {
           {list.map((item, index) => (
             <div key={index} className="list-table-format grid grid-cols-[1fr_1fr_1fr_0.5fr] md:grid-cols-[1fr_1fr_1fr_1fr_0.5fr]
                                         items-center gap-3 p-3 border-b text-base">
-              <img className="w-14 h-14 object-cover rounded-md" src={`http://localhost:4000/images/${item.image}`} alt={item.name} />
+              <img className="w-14 h-14 object-cover rounded-md" src={item.image} alt={item.name} />
               <p className="font-medium">{item.name}</p>
               <p className="hidden md:block">{item.category}</p>
               <p className="text-green-600 font-semibold">₹{item.price}</p>
