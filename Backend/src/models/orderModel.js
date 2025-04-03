@@ -1,8 +1,12 @@
 import mongoose from "mongoose";
 
 const orderSchema = new mongoose.Schema({
-     
+
         userId : {
+            type:String,
+            required:true
+        },
+        canteenId:{
             type:String,
             required:true
         },
@@ -12,15 +16,15 @@ const orderSchema = new mongoose.Schema({
         },
         amount : {
             type:Number,
-            required:true
+            
         },
         address : {
             type:Object,
-            required:true
+        
         },
         status: {
             type:String,
-            default:"Food Processing"
+            default:"Order Processing"
         },
         date : {
             type:Date,
@@ -30,7 +34,11 @@ const orderSchema = new mongoose.Schema({
             type:Boolean,
             default:false
         },
-},{timestamps:true})
+        timeSlot:{
+            type:String,
+            required:true
+        }
+},{timestamps:true,minimize:false})
 
 
 export const Order = mongoose.model("Order",orderSchema);

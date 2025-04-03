@@ -8,17 +8,20 @@ const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
 const placeOrder = async (req, res) => {
        
      const frontend_URL="http://localhost:5173"
+     
     try {
         const newOrder = new Order({
+            canteenId: req.body.canteenId,
             userId: req.body.userId,
-            items: req.body.items,
-            amount: req.body.amount,
-            address: req.body.address,
+            items: req.body.orderData.items,
+            amount: req.body.orderData.amount,
+            address: req.body.orderData.address,
+            timeSlot:req.body.orderData.address.timeSlot
         })
         await newOrder.save();
         await User.findByIdAndUpdate(req.body.userId, { cartData: {} });
 
-        const line_items = req.body.items.map((item) => ({
+        const line_items = req.body.orderData.items.map((item) => ({
             price_data: {
                 currency: "inr",
                 product_data: {
@@ -84,12 +87,12 @@ const placeOrder = async (req, res) => {
         }
  }
 
-
 // Listing orders for admin panel
 
 const listOrders=async(req,res)=>{
     try{
-        const orders = await Order.find({});
+        const canteenId = req.user?.canteenId; 
+        const orders = await Order.find({canteenId});
         res.json({success:true,data:orders});
 
     }catch(error){

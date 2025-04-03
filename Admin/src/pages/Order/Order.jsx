@@ -2,13 +2,25 @@ import React, { useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
 import axios from 'axios';
 import { assets } from '../../assets/assets';
+import { useContext } from 'react';
+import { StoreContext } from '../../context/storeContext';
 
 const Order = () => {
   const [orders, setOrders] = useState([]);
 
+  const {canteenToken}=useContext(StoreContext)
+
+
+  console.log("canteenToken",canteenToken)
+
   const fetchAllOrders = async () => {
     try {
-      const response = await axios.get("http://localhost:4000/api/order/list");
+      const response = await axios.get("http://localhost:4000/api/order/list",{
+        headers: {
+          Authorization: `Bearer ${canteenToken}`,  
+          'Content-Type': 'multipart/form-data'
+        }
+      });
       if (response.data.success) {
         setOrders(response.data.data.reverse());
       } else {
@@ -65,10 +77,10 @@ const Order = () => {
               </p>
               <p className="font-semibold mt-3">{order.address.firstName} {order.address.lastName}</p>
               <div className="text-sm text-gray-600">
-                <p>{order.address.street}, {order.address.city}</p>
-                <p>{order.address.state}, {order.address.country}, {order.address.zipcode}</p>
+               
               </div>
               <p className="mt-2 text-gray-700">{order.address.phone}</p>
+              <p className="mt-2 text-gray-700">{order.address.timeSlot}</p>
             </div>
 
             {/* Item Count */}
@@ -81,11 +93,11 @@ const Order = () => {
             <select
               onChange={(e) => statusHandler(e, order._id)}
               value={order.status}
-              className="bg-white border border-gray-400 rounded-md p-2 outline-none text-sm md:text-base w-full md:w-auto cursor-pointer"
+              className="bg-white border border-gray-400 rounded-md p-2 outline-none text-sm md:text-base w-[60%] md:w-auto cursor-pointer"
             >
-              <option value="Food Processing">Food Processing</option>
-              <option value="Out for delivery">Out for delivery</option>
-              <option value="Delivered">Delivered</option>
+              <option className='text-[10px]' value="Order Processing">Order Processing</option>
+              <option className='text-[10px]' value="Order Ready">Order Ready</option>
+              <option className='text-[10px]' value="Order Delivered">Order Delivered</option>
             </select>
           </div>
         ))}

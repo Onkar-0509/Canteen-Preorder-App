@@ -13,8 +13,12 @@ const canteenSchema = new mongoose.Schema({
      password:{
         type:String,
         required:true
+     },
+     location:{
+      type:String
      }
 
-},{timestamps:true})
+
+},{timestamps:true,minimize:true})
 
 export const Canteen = mongoose.model("Canteen",canteenSchema)

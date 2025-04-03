@@ -58,7 +58,7 @@ const Cart = () => {
             </div>
             <hr />
             <div className="cart-total-details flex justify-between text-[#555] py-1">
-              <p>Delivery Fee</p>
+              <p>Platform Fee</p>
               <p>₹{getTotalCartAmount() === 0 ? 0 : 2}</p>
             </div>
             <hr />

@@ -21,9 +21,13 @@ const foodSchema = new mongoose.Schema({
     category : {
         type:String,
         required:true
+    },
+    canteenId:{
+        type:String,
+        required:true
     }
 
-},{timestamps:true})
+},{timestamps:true,minimize:false})
 
 const Food = mongoose.model("Food",foodSchema);
 

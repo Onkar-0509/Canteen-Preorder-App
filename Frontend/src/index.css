@@ -3,6 +3,7 @@
 @tailwind utilities;
 
 
+
 *{
   padding: 0;
   margin: 0;
@@ -10,6 +11,7 @@
   font-family: Verdana, Geneva, Tahoma, sans-serif;
   scroll-behavior: smooth;
 }
+
 body{
   min-height: 100vh;
 }
@@ -25,4 +27,16 @@ a{
    100%{
     opacity: 1;
    }
+}
+
+/* Existing styles... */
+
+/* Scrollbar hiding utility classes */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+.no-scrollbar {
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;  /* Firefox */
 }

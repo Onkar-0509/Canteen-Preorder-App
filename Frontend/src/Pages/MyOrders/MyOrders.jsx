@@ -5,18 +5,30 @@ import { assets } from '../../assets/frontend_assets/assets';
 
 const MyOrders = () => {
   const [data, setData] = useState([]);
-  const { token,URL } = useContext(StoreContext);
+  const [canteenNames, setCanteenNames] = useState({});
+  const { token, URL, canteenInfo, fetchCanteenInfo } = useContext(StoreContext);
 
   const fetchOrders = async () => {
-    const response = await axios.post(URL+"/api/order/userorders", {}, { headers: { token } });
+    const response = await axios.post(URL + "/api/order/userorders", {}, { headers: { token } });
     setData(response.data.data);
+    
+    // Create a mapping of canteen IDs to names
+    const namesMap = {};
+    response.data.data.forEach(order => {
+      const canteen = canteenInfo.find(c => c._id === order.canteenId);
+      if (canteen) {
+        namesMap[order.canteenId] = canteen.name;
+      }
+    });
+    setCanteenNames(namesMap);
   };
 
   useEffect(() => {
     if (token) {
       fetchOrders();
+      fetchCanteenInfo();
     }
-  }, [token]);
+  }, [token, canteenInfo]);
 
   return (
     <div className="my-orders mt-12 mb-12 px-4">
@@ -25,11 +37,16 @@ const MyOrders = () => {
         {data.map((order, index) => (
           <div
             key={index}
-            className="my-orders-order grid grid-cols-6 gap-8 items-center text-sm p-3 border border-red-500 text-gray-600 rounded-lg
+            className="my-orders-order grid grid-cols-7 gap-8 items-center text-sm p-3 border border-red-500 text-gray-600 rounded-lg
                       max-sm:grid-cols-1 max-sm:gap-4 max-sm:text-center"
           >
             {/* Parcel Icon */}
             <img src={assets.parcel_icon} alt="" className="w-12 max-sm:justify-self-center" />
+
+            {/* Canteen Name */}
+            <p className="font-medium">
+              {canteenNames[order.canteenId] || 'Loading...'}
+            </p>
 
             {/* Order Items */}
             <p className="max-sm:col-span-1">
