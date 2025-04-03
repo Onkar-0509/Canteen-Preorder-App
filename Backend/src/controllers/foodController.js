@@ -11,7 +11,7 @@ const addFood = async (req, res) => {
         }
 
         // Upload image to Cloudinary
-        console.log(req.file.path);
+        // console.log(req.file.path);
         
         const imageUpload = await uploadOnCloudinary(req.file.path);
         if (!imageUpload || !imageUpload.secure_url) {
