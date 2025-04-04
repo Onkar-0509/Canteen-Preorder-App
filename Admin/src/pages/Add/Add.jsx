@@ -2,10 +2,10 @@ import React, { useContext, useState } from 'react';
 import { assets } from '../../assets/assets';
 import axios from 'axios';
 import { toast } from 'react-toastify';
-import { StoreContext } from '../../context/storeContext';
+import { StoreContext } from '../../context/StoreContext';
 
 const Add = () => {
-  const { canteenToken,canteenName } = useContext(StoreContext);
+  const { canteenToken,canteenName,url } = useContext(StoreContext);
 
   const name = localStorage.getItem('canteenName');
   // Check if canteenToken exists
@@ -49,7 +49,7 @@ const Add = () => {
 
     try {
       const response = await axios.post(
-        "http://localhost:4000/api/food/add",
+        url+"/api/food/add",
         formData,
         {
           headers: {

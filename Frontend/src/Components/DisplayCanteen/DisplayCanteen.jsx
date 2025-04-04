@@ -3,14 +3,14 @@ import { useNavigate } from 'react-router-dom';
 import { StoreContext } from '../../Context/StoreContext';
 
 const DisplayCanteen = () => {
-    const { canteenInfo } = useContext(StoreContext);
+    const { canteenInfo = [] } = useContext(StoreContext); // Default to empty array if undefined
     const [showAll, setShowAll] = useState(false);
     const navigate = useNavigate();
     
-    // For mobile: show 2 canteens initially, for others: show 4
+    // Determine the number of canteens to display initially based on screen size
     const initialDisplayCount = window.innerWidth < 640 ? 2 : 4;
     const displayedCanteens = showAll ? canteenInfo : canteenInfo.slice(0, initialDisplayCount);
-    
+
     return (
         <div id='display-canteen' className="p-4 max-w-7xl mx-auto">
             <h1 className="text-[35px] max-[700px]:text-[30px] max-[500px]:text-[26px] max-[400px]:text-[23px] font-bold mb-6 text-center text-gray-800 bg-gradient-to-r from-red-500 to-orange-500 bg-clip-text text-transparent">
@@ -56,7 +56,7 @@ const DisplayCanteen = () => {
                         </div>
                     ))
                 ) : (
-                    <div className="col-span-3  text-center py-10 border-2 border-dashed border-gray-200 rounded-lg">
+                    <div className="col-span-3 text-center py-10 border-2 border-dashed border-gray-200 rounded-lg">
                         <svg className="mx-auto h-10 w-10 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9.172 16.172a4 4 0 015.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
                         </svg>
@@ -65,13 +65,9 @@ const DisplayCanteen = () => {
                     </div>
                 )}
             </div>
-            {/* Show "Explore Canteens" button if:
-                - On mobile AND there are more than 2 canteens AND not showing all
-                - OR On larger screens AND there are more than 4 canteens AND not showing all */}
-            {!showAll && (
-                (window.innerWidth < 640 && canteenInfo.length > 2) || 
-                (window.innerWidth >= 640 && canteenInfo.length > 4)
-            ) && (
+
+            {/* Show "Explore Canteens" button only if there are more canteens to show */}
+            {!showAll && canteenInfo.length > initialDisplayCount && (
                 <div className="flex justify-center mt-9">
                     <button
                         onClick={() => setShowAll(true)}

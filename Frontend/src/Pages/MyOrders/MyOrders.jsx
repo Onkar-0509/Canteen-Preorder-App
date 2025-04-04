@@ -34,7 +34,7 @@ const MyOrders = () => {
     <div className="my-orders mt-12 mb-12 px-4">
       <h2 className="text-2xl font-bold mb-6">My Orders</h2>
       <div className="container flex flex-col gap-5 mt-8">
-        {data.map((order, index) => (
+      {[...data].reverse().map((order, index) => (
           <div
             key={index}
             className="my-orders-order grid grid-cols-7 gap-8 items-center text-sm p-3 border border-red-500 text-gray-600 rounded-lg

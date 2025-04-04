@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { assets } from "../../assets/assets.js";
-import { StoreContext } from "../../context/storeContext.jsx";
+import { StoreContext } from "../../context/StoreContext.jsx";
 
 const Navbar = () => {
   const navigate = useNavigate();

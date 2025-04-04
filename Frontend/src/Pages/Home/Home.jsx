@@ -20,7 +20,7 @@ const Home = () => {
 
   return (
     <div>
-      {!isMobile && <Header />}
+      {/* {!isMobile && <Header />} */}
       <Recommendations />
       {/* <ExploreMenu category={category} setCategory={setCategory} /> */}
       {/* <FoodDisplay category={category}/> */}

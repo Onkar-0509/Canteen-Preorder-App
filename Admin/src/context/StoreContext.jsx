@@ -6,8 +6,9 @@ const StoreContextProvider = (props) => {
   const [canteenToken, setCanteenToken] = useState(() => localStorage.getItem("canteenToken") || "");
   const [canteenName,setCanteenName] = useState("");
   
-
-  const contextValue = { canteenToken, setCanteenToken,canteenName,setCanteenName };
+  const url ="https://easy-serve-backend.vercel.app";
+  
+  const contextValue = { canteenToken, setCanteenToken,canteenName,setCanteenName,url };
 
   return (
     <StoreContext.Provider value={contextValue}>

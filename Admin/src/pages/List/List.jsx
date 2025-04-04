@@ -5,11 +5,11 @@ import { StoreContext } from '../../context/StoreContext';
 
 const List = () => {
   const [list, setList] = useState([]); // Ensure list is always an array
-  const { canteenToken } = useContext(StoreContext);
+  const { canteenToken,url } = useContext(StoreContext);
 
   const fetchList = async () => {
     try {
-      const response = await axios.post("http://localhost:4000/api/food/sort", {},
+      const response = await axios.post(url+"/api/food/sort", {},
         {
           headers: {
             Authorization: `Bearer ${canteenToken}`,
@@ -27,19 +27,25 @@ const List = () => {
     }
   };
 
-  const removeFood = async (foodId) => {
+  const remove = async (foodId) => {
     try {
-      const response = await axios.post("http://localhost:4000/api/food/delete", { id: foodId });
-      if (response.data.success) {
-        await fetchList();
-        toast.success(response.data.message);
-      } else {
-        toast.error("Error deleting food item");
-      }
+        const response = await axios.post(url+"/api/food/delete", { id: foodId });
+        console.log(foodId);
+        
+        console.log("Delete Response:", response.data);
+
+        if (response.data.success) {
+            await fetchList(); // Refresh the food list
+            toast.success(response.data.message); // Display success message
+        } else {
+            toast.error(response.data.message || "Error deleting food item");
+        }
     } catch (err) {
-      toast.error("Error deleting food item");
+        console.error("Error in removeFood:", err);
+        toast.error("Error deleting food item");
     }
-  };
+};
+
 
   useEffect(() => {
     fetchList();
@@ -70,7 +76,7 @@ const List = () => {
               <p className="font-medium">{item.name}</p>
               <p className="hidden md:block">{item.category}</p>
               <p className="text-green-600 font-semibold">₹{item.price}</p>
-              <p onClick={() => removeFood(item._id)} className="cursor-pointer text-red-500 hover:text-red-700 font-bold text-lg">
+              <p onClick={() => remove(item._id)} className="cursor-pointer text-red-500 hover:text-red-700 font-bold text-lg">
                 ✖
               </p>
             </div>

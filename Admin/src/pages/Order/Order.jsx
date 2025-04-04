@@ -3,19 +3,19 @@ import { toast } from 'react-toastify';
 import axios from 'axios';
 import { assets } from '../../assets/assets';
 import { useContext } from 'react';
-import { StoreContext } from '../../context/storeContext';
+import { StoreContext } from '../../context/StoreContext';
 
 const Order = () => {
   const [orders, setOrders] = useState([]);
 
-  const {canteenToken}=useContext(StoreContext)
+  const {canteenToken,url}=useContext(StoreContext)
 
 
   console.log("canteenToken",canteenToken)
 
   const fetchAllOrders = async () => {
     try {
-      const response = await axios.get("http://localhost:4000/api/order/list",{
+      const response = await axios.get(url+"/api/order/list",{
         headers: {
           Authorization: `Bearer ${canteenToken}`,  
           'Content-Type': 'multipart/form-data'
@@ -33,7 +33,7 @@ const Order = () => {
 
   const statusHandler = async (event, orderId) => {
     try {
-      const response = await axios.post("http://localhost:4000/api/order/status", {
+      const response = await axios.post(url+"/api/order/status", {
         orderId,
         status: event.target.value
       });

@@ -1,6 +1,7 @@
 import Food from "../models/foodModel.js";
 import fs from "fs/promises"; // Use async file operations
 import uploadOnCloudinary from "../middlewares/cloudinary.js";
+import cloudinary from "cloudinary";
 
 const addFood = async (req, res) => {
     try {
@@ -31,7 +32,7 @@ const addFood = async (req, res) => {
         });
 
         await food.save();
-        res.json({ success: true, message: "Food Added Successfully!", imageUrl });
+        res.json({ success: true, message: "Food Added Successfully!" });
 
     } catch (error) {
         console.error("❌ Error in addFood API:", error);
@@ -41,27 +42,40 @@ const addFood = async (req, res) => {
 
 
 // Remove food item and delete image from Cloudinary
+
+
 const removeFood = async (req, res) => {
     try {
-        const food = await Food.findById(req.body.id);
+        const foodId = req.body.id;
+        
+        if (!foodId) {
+            return res.status(400).json({ success: false, message: "Food ID is required" });
+        }
+
+        const food = await Food.findById(foodId);
         if (!food) {
             return res.status(404).json({ success: false, message: "Food item not found" });
         }
 
         // Delete image from Cloudinary
         if (food.cloudinary_id) {
-            await cloudinary.uploader.destroy(food.cloudinary_id);
+            const cloudinaryResponse = await cloudinary.uploader.destroy(food.cloudinary_id);
+            if (cloudinaryResponse.result !== "ok") {
+                return res.status(500).json({ success: false, message: "Failed to delete image from Cloudinary" });
+            }
         }
 
         // Remove food item from database
-        await Food.findByIdAndDelete(req.body.id);
-        res.json({ success: true, message: "Food Removed" });
+        await food.deleteOne();
+
+        res.json({ success: true, message: "Food Removed Successfully!" });
 
     } catch (error) {
-        console.error(error);
-        res.json({ success: false, message: "Error removing food item" });
+        console.error("❌ Error in removeFood API:", error.message);
+        res.status(500).json({ success: false, message: "Error removing food item" });
     }
 };
+
 
 
 const listFood = async(req,res)=>{

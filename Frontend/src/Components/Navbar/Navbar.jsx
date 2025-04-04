@@ -19,7 +19,7 @@ const Navbar = ({ setShowLogin }) => {
     <div className="navbar w-full flex px-5 py-3 justify-between items-center border-b border-red-400 ">
 
       <Link to="/">
-        <p className="text-[#ff2e4aeb] italic text-[44px] max-[700px]:text-[37px] max-[500px]:text-[32px] max-[400px]:text-[27px] font-[550]">
+        <p className="text-[#ff2e4aeb] italic text-[45px] max-[700px]:text-[40px] max-[500px]:text-[35px] max-[400px]:text-[30px] font-[550]">
           EasyServe
         </p>
       </Link>
@@ -84,7 +84,7 @@ const Navbar = ({ setShowLogin }) => {
         {!token ? (
           <button
             onClick={() => setShowLogin(true)}
-            className="text-[#49557e] bg-transparent border border-[#48484f] rounded-full px-3 md:px-4 py-1 md:py-2 cursor-pointer hover:bg-[#fff4f2] transition-all duration-300 text-[17px] max-[700px]:text-[13px] max-[500px]:text-[11px] max-[400px]:text-[9px]"
+            className="text-[#49557e] bg-transparent border border-[#48484f] rounded-full px-3 md:px-4 py-1 md:py-2 cursor-pointer hover:bg-[#fff4f2] transition-all duration-300 text-[20px] max-[700px]:text-[16px] max-[500px]:text-[13px] max-[400px]:text-[11px]"
           >
             Sign In
           </button>

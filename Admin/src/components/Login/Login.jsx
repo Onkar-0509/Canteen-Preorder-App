@@ -3,11 +3,11 @@ import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { useContext } from 'react';
-import { StoreContext } from '../../context/storeContext';
+import { StoreContext } from '../../context/StoreContext';
 
 const Login = () => {
 
-  const {setCanteenToken,setCanteenName} = useContext(StoreContext)
+  const {setCanteenToken,setCanteenName,url} = useContext(StoreContext)
   const [isChecked,setIsChecked] = useState(false);
   const [isLogin, setIsLogin] = useState(true);
   const [loginData, setLoginData] = useState({
@@ -49,7 +49,7 @@ const handleCheckboxChange = () => {
     e.preventDefault();
     try {
 
-      const response = await axios.post('http://localhost:4000/api/canteen/login', loginData);
+      const response = await axios.post(url+'/api/canteen/login', loginData);
       if (response.data.success) {
         setCanteenToken(response.data.canteenToken)
         localStorage.setItem('canteenToken', response.data.canteenToken);
@@ -69,7 +69,7 @@ const handleCheckboxChange = () => {
   const handleSignupSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post('http://localhost:4000/api/canteen/register', signupData);
+      const response = await axios.post(url+'/api/canteen/register', signupData);
       if (response.data.success) {
         setCanteenName(response.data.username);
         localStorage.setItem("canteenName",response.data.username)

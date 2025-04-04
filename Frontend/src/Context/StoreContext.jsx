@@ -9,8 +9,11 @@ const StoreContextProvider = (props) => {
     const [canteenInfo, setCanteenInfo] = useState([]);
     const [token, setToken] = useState("");
     const [food_list, setFoodList] = useState([]);
-    const URL = "http://localhost:4000";
+    const URL ="https://easy-serve-backend.vercel.app";
+ 
     const location = useLocation(); // Get the current route
+
+    console.log("bvv",URL)
 
     const fetchFoodList = async () => {
         const response = await axios.get(URL + "/api/food/list");
@@ -21,7 +24,7 @@ const StoreContextProvider = (props) => {
 
     const fetchCanteenInfo = async () => {
         try {
-            const response = await axios.get('http://localhost:4000/api/canteen/display-canteen');
+            const response = await axios.get(URL+'/api/canteen/display-canteen');
             setCanteenInfo(response.data.canteen);
         } catch (err) {
             console.error("Error fetching canteen info:", err);
@@ -37,14 +40,14 @@ const StoreContextProvider = (props) => {
             setCartItem((prev) => ({ ...prev, [itemId]: prev[itemId] + 1 }));
         }
         if (token) {
-            await axios.post(URL + "/api/cart/add", { itemId }, { headers: { token } });
+            await axios.post(URL+"/api/cart/add", { itemId }, { headers: { token } });
         }
     };
 
     const removeFromCart = async (itemId) => {
         setCartItem((prev) => ({ ...prev, [itemId]: prev[itemId] - 1 }));
         if (token) {
-            await axios.post(URL + "/api/cart/remove", { itemId }, { headers: { token } });
+            await axios.post(URL+"/api/cart/remove", { itemId }, { headers: { token } });
         }
     };
 
@@ -60,11 +63,15 @@ const StoreContextProvider = (props) => {
         }
         return totalAmount;
     };
-
     const loadCartData = async (token) => {
-        const response = await axios.post(URL + "/api/cart/get", {}, { headers: { token } });
-        setCartItem(response.data.data);
+        try {
+            const response = await axios.post(URL+"/api/cart/get", {}, { headers: { token } });
+            setCartItem(response.data.data);
+        } catch (error) {
+            console.error("Error loading cart data:", error);
+        }
     };
+    
 
     useEffect(() => {
         async function loadData() {
